@@ -1,15 +1,14 @@
-load("@rules_ruby//ruby:deps.bzl", "rb_register_toolchains")
+load("@rules_ruby//ruby:defs.bzl", "rb_binary", "rb_library")
 
-rb_register_toolchains(
-    version = "3.0.6",
-    # alternatively, load version from .ruby-version file
-    # version_file = "//:.ruby-version",
+rb_library(
+    name = "main_lib",
+    srcs = ["main.rb"],
 )
 
-load("@rules_ruby//ruby:deps.bzl", "rb_bundle_fetch")
-
-rb_bundle_fetch(
-    name = "bundle",
-    gemfile = "//:Gemfile",
-    gemfile_lock = "//:Gemfile.lock",
+rb_binary(
+    name = "main",
+    main = "main.rb",
+    deps =  [
+        ":main_lib",
+    ]
 )
